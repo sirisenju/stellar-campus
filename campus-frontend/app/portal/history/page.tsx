@@ -1,4 +1,4 @@
-import { HistoryScreen } from "@/components/portal/submissions";
+import { PortalPage } from "@/components/portal/shell";
 export default function Page() {
-  return <HistoryScreen />;
+  return <PortalPage />;
 }

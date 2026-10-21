@@ -1,4 +1,4 @@
-import { ProfileScreen } from "@/components/portal/account";
+import { PortalPage } from "@/components/portal/shell";
 export default function Page() {
-  return <ProfileScreen />;
+  return <PortalPage />;
 }

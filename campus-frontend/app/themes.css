@@ -343,8 +343,7 @@ html[data-theme="light"]
     .p-connect-panel,
     .p-wallet-card,
     .p-path-card.is-selected,
-    .p-overall,
-    .p-demo-operation
+    .p-overall
   ) {
   background: var(--surface-tint);
   border-color: #d8ccee;
@@ -399,7 +398,6 @@ html[data-theme="light"]
 }
 html[data-theme="light"]
   :is(
-    .p-demo-notice,
     .p-micro,
     .p-terminal-top > span:last-child,
     .p-copy-row span:not(.p-sr-only),

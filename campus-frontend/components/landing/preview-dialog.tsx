@@ -11,11 +11,11 @@ const previews = {
     description:
       "Learn Stellar by doing: verify your wallet, fund a Testnet account, send XLM, transfer an asset, and invoke a Soroban contract.",
     steps: [
-      "Connect a supported Stellar wallet, such as Freighter or xBull.",
+      "Connect a supported Stellar wallet, such as Freighter.",
       "Sign a message to prove that the wallet belongs to you.",
       "Complete challenges on Testnet and build your verified portfolio.",
     ],
-    note: "This is a landing-page preview. Live wallet connection and sign-in are coming in the next integration step.",
+    note: "Connect Freighter and sign a message to start your Testnet challenges.",
     action: "Explore the challenges",
     href: "#challenges",
   },
@@ -60,7 +60,7 @@ const previews = {
       "Claim test tokens and send the assigned asset payment with your unique memo.",
       "Verify the issuer, asset, amount, destination, and transaction memo.",
     ],
-    note: "Preview only. Asset parameters come from your active assignment when the live challenge is available.",
+    note: "Preview only. Asset parameters come from your active Testnet assignment.",
     action: "Explore verification",
     href: "#verification",
   },

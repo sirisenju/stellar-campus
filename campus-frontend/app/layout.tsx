@@ -3,7 +3,8 @@ import { Manrope, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./portal.css";
 import "./themes.css";
-import { PortalProvider } from "@/components/portal/provider";
+import "./welcome.css";
+import { LiveAuthProvider } from "@/components/auth/provider";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 
 const manrope = Manrope({
@@ -36,7 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body>
-        <PortalProvider>{children}</PortalProvider>
+        <LiveAuthProvider>{children}</LiveAuthProvider>
       </body>
     </html>
   );

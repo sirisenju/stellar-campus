@@ -12,25 +12,28 @@ import {
 } from "@/components/landing/feature-panels";
 import { Footer } from "@/components/landing/footer";
 import { PreviewController } from "@/components/landing/preview-dialog";
+import { Welcome } from "@/components/welcome/welcome";
 
 export default function Home() {
   return (
-    <div id="top" className="landing-page">
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
-      <Header />
-      <main id="main-content">
-        <Hero />
-        <HowItWorks />
-        <FeaturedChallenges />
-        <VerificationFeature />
-        <SorobanFeature />
-        <PortfolioFeature />
-        <FinalCallToAction />
-      </main>
-      <Footer />
-      <PreviewController />
-    </div>
+    <Welcome>
+      <div id="top" className="landing-page">
+        <a className="skip-link" href="#main-content">
+          Skip to content
+        </a>
+        <Header />
+        <main id="main-content">
+          <Hero />
+          <HowItWorks />
+          <FeaturedChallenges />
+          <VerificationFeature />
+          <SorobanFeature />
+          <PortfolioFeature />
+          <FinalCallToAction />
+        </main>
+        <Footer />
+        <PreviewController />
+      </div>
+    </Welcome>
   );
 }

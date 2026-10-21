@@ -30,7 +30,7 @@ export function Footer() {
         </div>
         <div className="footer-bottom">
           <p>© 2026 StellarCampus</p>
-          <p>All demo panels are illustrative. No live connection.</p>
+          <p>Learn by building on Stellar Testnet.</p>
         </div>
       </div>
     </footer>

@@ -1,4 +1,4 @@
-import { ChallengeCollectionScreen } from "@/components/portal/challenge-cards";
+import { PortalPage } from "@/components/portal/shell";
 export default function Page() {
-  return <ChallengeCollectionScreen />;
+  return <PortalPage />;
 }
