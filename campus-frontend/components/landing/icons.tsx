@@ -18,9 +18,37 @@ export type IconName =
   | "external"
   | "close"
   | "menu"
-  | "stellar";
+  | "stellar"
+  | "user"
+  | "settings"
+  | "logout"
+  | "star";
 
 const paths: Record<IconName, ReactNode> = {
+  user: (
+    <>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21v-2a8 8 0 0 1 16 0v2" />
+    </>
+  ),
+  settings: (
+    <>
+      <path d="m9 3 1-1h4l1 3 3 1 3 1v4l-2 2-1 3-1 3h-4l-2-2-3-1-3-1v-4l2-2 1-3Z" />
+      <circle cx="12" cy="11" r="3" />
+    </>
+  ),
+  logout: (
+    <>
+      <path d="M9 4H4v16h5m5-13 5 5-5 5m-5-5h14" />
+    </>
+  ),
+  star: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="m12 6 1.8 3.6 4 .6-2.9 2.8.7 4-3.6-1.9L8.4 17l.7-4-2.9-2.8 4-.6L12 6Z" />
+    </>
+  ),
+
   arrow: (
     <>
       <path d="M4 12h15M14 6l6 6-6 6" />

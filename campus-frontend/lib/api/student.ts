@@ -9,6 +9,9 @@ export type LiveChallenge = {
   config?: { instructions?: string };
 };
 export type LiveSubmission = {
+  challenge_id?: string;
+  tx_hash?: string;
+  verification_details?: Record<string, unknown>;
   id?: string;
   submission_id?: string;
   challenge_title: string;

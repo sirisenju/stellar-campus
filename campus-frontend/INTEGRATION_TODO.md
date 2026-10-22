@@ -24,7 +24,8 @@ Real-wallet signing requires the wallet owner to approve prompts. Never provide 
 
 ## 3. Persistence and session contracts
 
-- [ ] Agree on and implement profile read/update endpoints for display name, developer experience and GitHub; connect the live profile editor after the contract exists.
+- [ ] Backend engineer: extend registration/profile persistence to accept display name, GitHub profile URL and developer experience (`beginner`, `intermediate`, `advanced`, `expert`); validate and store them, and return them through authenticated profile read/update endpoints. Display name and GitHub inputs are now editable on signup, but these values are not yet sent or saved.
+- [ ] Frontend: connect the editable signup fields and live profile editor to the agreed backend contract, preserve entered values through wallet verification, and verify they survive a profile reload.
 - [ ] Agree on learning-path persistence and connect live path selection to it.
 - [ ] Add an authenticated active-assignment lookup/resume contract, then restore assignments safely after full reload without resending existing transactions.
 - [ ] Agree on refresh/current-user/logout-revocation requirements. Until supported, retain memory-only Bearer sessions and explicit wallet reauthentication after reload/expiry.

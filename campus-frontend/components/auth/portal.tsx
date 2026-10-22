@@ -13,6 +13,10 @@ import {
 } from "@/lib/api/student";
 import { useLiveAuth } from "./provider";
 import { LiveChallengeWorkspace, LiveSubmissionDetail } from "./challenge";
+import { WorkspaceFrame } from "./workspace-frame";
+import { Dashboard, DeveloperProgress } from "./dashboard";
+import { ChallengeIntroduction } from "./learning-workspace";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { LiveFrame } from "./screens";
 
 type Data = {
@@ -26,6 +30,7 @@ export function LivePortal() {
   const pathname = usePathname();
   const [data, setData] = useState<Data | null>(null);
   const [error, setError] = useState("");
+  const [openedChallenge, setOpenedChallenge] = useState<string | null>(null);
   const [retry, setRetry] = useState(0);
   const session = auth.session;
   useEffect(() => {
@@ -94,47 +99,32 @@ export function LivePortal() {
     router.push("/signin");
   }
   return (
-    <LiveFrame>
-      <div className="p-between">
-        <p className="p-eyebrow">Live student workspace / Stellar Testnet</p>
-        <button className="p-button p-secondary" onClick={signOut}>
-          Sign out
-        </button>
-      </div>
-      <nav className="p-live-nav" aria-label="Workspace navigation">
-        {[
-          ["Dashboard", "/portal"],
-          ["Challenges", "/portal/challenges"],
-          ["History", "/portal/history"],
-          ["Progress", "/portal/progress"],
-          ["Profile", "/portal/profile"],
-          ["Wallet", "/portal/wallet"],
-        ].map(([label, href]) => (
-          <Link
-            key={href}
-            href={href}
-            aria-current={pathname === href ? "page" : undefined}
-          >
-            {label}
-          </Link>
-        ))}
-      </nav>
-      <h1>
-        {section === "dashboard"
-          ? `Keep building, ${session.user.displayName}.`
-          : section === "challenges"
-            ? (selected?.title ?? "Available challenges")
-            : section === "history"
-              ? "Submission history"
-              : section === "progress"
-                ? "Your verified progress"
-                : section === "wallet"
-                  ? "Connected wallet"
-                  : section === "profile"
-                    ? "Your developer profile"
-                    : "Verification details"}
-      </h1>
-      <p className="p-live-address">{session.user.stellarAddress}</p>
+    <WorkspaceFrame user={session.user} onSignOut={signOut}>
+      {!["dashboard", "challenges"].includes(section) && (
+        <header className="ds-page-heading">
+          <div>
+            <h1>
+              {section === "dashboard"
+                ? `Keep building, ${session.user.displayName}.`
+                : section === "challenges"
+                  ? (selected?.title ?? "Available challenges")
+                  : section === "history"
+                    ? "Submission history"
+                    : section === "progress"
+                      ? "Your verified progress"
+                      : section === "wallet"
+                        ? "Connected wallet"
+                        : section === "profile"
+                          ? "Your developer profile"
+                          : section === "settings"
+                            ? "Settings"
+                            : "Verification details"}
+            </h1>
+          </div>
+          <span className="ds-badge ds-network">Stellar Testnet</span>
+        </header>
+      )}
+
       {error ? (
         <div className="p-note">
           <p role="alert">{error}</p>
@@ -149,40 +139,36 @@ export function LivePortal() {
         <p role="status">Loading your authoritative API data…</p>
       ) : (
         <>
-          {["dashboard", "progress"].includes(section) && (
+          {section === "dashboard" && (
+            <Dashboard
+              user={session.user}
+              progress={data.progress}
+              challenges={data.challenges}
+              history={data.history}
+            />
+          )}
+          {["progress"].includes(section) && (
             <>
-              <div className="p-live-grid">
-                {[
-                  ["Total challenges", data.progress.summary.total_challenges],
-                  ["Verified", data.progress.summary.verified_challenges],
-                  [
-                    "Pending submissions",
-                    data.progress.summary.pending_submissions,
-                  ],
-                  [
-                    "Failed submissions",
-                    data.progress.summary.failed_submissions,
-                  ],
-                  [
-                    "Completion",
-                    `${data.progress.summary.overall_progress_percent}%`,
-                  ],
-                ].map(([label, value]) => (
-                  <article className="p-panel" key={label}>
-                    <p className="p-muted">{label}</p>
-                    <h2>{value}</h2>
-                  </article>
-                ))}
-              </div>
+              <DeveloperProgress
+                progress={data.progress}
+                challenges={data.challenges}
+              />
               <p className="p-field-help">
                 Counts come from the API. Pending and failed evidence do not
                 earn completion.
               </p>
             </>
           )}
-          {["dashboard", "challenges"].includes(section) && (
+          {["challenges"].includes(section) && (
             <>
-              {challengeId ? (
+              {challengeId && selected && openedChallenge !== challengeId ? (
+                <ChallengeIntroduction
+                  challenge={selected}
+                  user={session.user}
+                  challenges={data.challenges}
+                  onStart={() => setOpenedChallenge(challengeId)}
+                />
+              ) : challengeId ? (
                 <LiveChallengeWorkspace
                   key={challengeId}
                   id={challengeId}
@@ -214,7 +200,7 @@ export function LivePortal() {
               )}
             </>
           )}
-          {["dashboard", "history", "progress"].includes(section) && (
+          {["history", "progress"].includes(section) && (
             <section className="p-live-list">
               <h2>
                 {section === "submissions"
@@ -281,6 +267,34 @@ export function LivePortal() {
               </p>
             </section>
           )}
+          {section === "settings" && (
+            <section className="ds-card ds-settings">
+              <h2>Workspace preferences</h2>
+              <div>
+                <div>
+                  <h3>Appearance</h3>
+                  <p>Switch between light and dark mode.</p>
+                </div>
+                <ThemeToggle />
+              </div>
+              <div>
+                <div>
+                  <h3>Connected wallet</h3>
+                  <p>Manage your Freighter connection.</p>
+                </div>
+                <Link href="/portal/wallet">Manage wallet →</Link>
+              </div>
+              <div>
+                <div>
+                  <h3>Account session</h3>
+                  <p>Sign out of your current workspace.</p>
+                </div>
+                <button className="p-button p-secondary" onClick={signOut}>
+                  Sign out
+                </button>
+              </div>
+            </section>
+          )}
           {section === "wallet" && (
             <section className="p-panel p-registration">
               <h2>Freighter · ownership verified</h2>
@@ -296,6 +310,6 @@ export function LivePortal() {
           )}
         </>
       )}
-    </LiveFrame>
+    </WorkspaceFrame>
   );
 }
